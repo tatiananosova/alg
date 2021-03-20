@@ -1,10 +1,12 @@
 package lesson2;
 
+import java.util.Random;
+
 public class MyArrayList<T extends Comparable<T>> {
     private T[] list;
     private int size;
     private int capacity;
-    private final int DEFAULT_CAPACITY = 10;
+    private final int DEFAULT_CAPACITY = 1000000;
 
     public MyArrayList(int capacity) {
         if (capacity <= 0) {
@@ -21,13 +23,32 @@ public class MyArrayList<T extends Comparable<T>> {
 
     public void add(T item) {
         // доделать проверку на превышение лоад фактора 0.75
+        checkLoadFactor();
         list[size] = item;
         size++;
     }
 
+    private void checkLoadFactor() {
+        if ((double)size/capacity > 0.75) {
+            System.out.println("Load factor reached. Increasing capacity");
+            capacity = (int) (capacity + (capacity * 0.25));
+            T[] newList = (T[]) new Comparable[capacity];
+            System.arraycopy(list, 0, newList, 0, size);
+            this.list = newList;
+        }
+    }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new RuntimeException("incorrect index");
+        }
+    }
+
     public void add(int index, T item) {
         // доделать проверку на превышение лоад фактора 0.75
+        checkLoadFactor();
         // доделать проверку на допустимость индекса
+        checkIndex(index);
         for (int i = size; i > index; i--) {
             list[i] = list[i - 1];
         }
@@ -37,6 +58,7 @@ public class MyArrayList<T extends Comparable<T>> {
 
     public final T remove(int index) {
         // доделать проверку на допустимость индекса
+        checkIndex(index);
         T temp = list[index];
         for (int i = index; i < size; i++) {
             list[i] = list[i + 1];
@@ -66,10 +88,12 @@ public class MyArrayList<T extends Comparable<T>> {
 
     public T get(int index) {
         // доделать проверку на допустимость индекса
+        checkIndex(index);
         return list[index];
     }
 
     public void set(int index, T item) {
+        checkIndex(index);
         // доделать проверку на допустимость индекса
 
         list[index] = item;
@@ -153,6 +177,16 @@ public class MyArrayList<T extends Comparable<T>> {
             if( !isSwap){
                 break;
             }
+        }
+    }
+
+    public void shuffle() {
+        Random rnd = new Random();
+        for (int i = size - 1; i > 0; i--) {
+            int index = rnd.nextInt(i);
+            T a = list[index];
+            list[index] = list[i];
+            list[i] = a;
         }
     }
 }
