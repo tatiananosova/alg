@@ -1,7 +1,11 @@
 package lesson2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
-import java.util.function.*;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 public class Main {
     public static void main(String[] args) {
@@ -84,35 +88,19 @@ public class Main {
 
 
         Random r = new Random();
-        MyArrayList<Integer> mal = new MyArrayList<>(100000);
-        for (int i = 0; i < 100000; i++) {
+        MyArrayList<Integer> mal = new MyArrayList<>(10);
+        for (int i = 0; i < 10; i++) {
             mal.add(r.nextInt(100));
         }
-        System.out.println("size " + mal.size());
+        System.out.println(mal);
 
-        runWithTimeCount(MyArrayList::shuffle, mal, "Shuffle");
-        runWithTimeCount(MyArrayList::insertionSort, mal, "Insertion sort");
-        runWithTimeCount(MyArrayList::shuffle, mal, "Shuffle");
-        runWithTimeCount(MyArrayList::selectionSort, mal, "Selection sort");
-        runWithTimeCount(MyArrayList::shuffle, mal, "Shuffle");
-        runWithTimeCount(MyArrayList::bubbleSort, mal, "Bubble sort");
 
-        long time = System.currentTimeMillis();
 //        mal.selectionSort();
-// Sort time 10536 mls
 //        mal.insertionSort();
-// Sort time 9426 mls
-//        mal.bubbleSort();
-// Sort time 37507 mls
-        System.out.println(System.currentTimeMillis() - time);
+        mal.bubbleSort();
 
-  //      System.out.println(mal);
 
-    }
+        System.out.println(mal);
 
-    public static void runWithTimeCount(Consumer<MyArrayList<Integer>> consumer, MyArrayList<Integer> mal, String msg) {
-        long time = System.currentTimeMillis();
-        consumer.accept(mal);
-        System.out.println(msg + " run time is: " + (System.currentTimeMillis() - time) + " ms");
     }
 }
