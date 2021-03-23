@@ -24,7 +24,8 @@ public class MyStack<T> {
     public void push(T item) {
         if (isFull()) {
             //реализовать расширение массива
-            throw new StackOverflowError("Стек заполнен");
+            capacity = (int) (capacity + (capacity * 0.25));
+            reCapacity(capacity);
         }
         list[size]= item;
         size++;
