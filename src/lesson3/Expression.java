@@ -27,7 +27,7 @@ public class Expression {
                 }
             }
         }
-        if(!stack.isEmpty()){
+        if (!stack.isEmpty()) {
             System.out.println("Error: bracket doesn't match");
             return false;
         }

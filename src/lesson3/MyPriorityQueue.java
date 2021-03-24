@@ -32,8 +32,8 @@ public class MyPriorityQueue<T extends Comparable<T>> {
         size++;
 
         int i = size - 1;
-        while (i > 0 && list[i-1].compareTo(list[i]) < 0) {
-            swap(i, i-1);
+        while (i > 0 && list[i - 1].compareTo(list[i]) < 0) {
+            swap(i, i - 1);
             i--;
         }
     }

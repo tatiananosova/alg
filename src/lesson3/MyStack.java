@@ -27,22 +27,22 @@ public class MyStack<T> {
             capacity = (int) (capacity + (capacity * 0.25));
             reCapacity(capacity);
         }
-        list[size]= item;
+        list[size] = item;
         size++;
     }
 
-    public T pop(){
+    public T pop() {
         T temp = peek();
         size--;
-        list[size]= null;
+        list[size] = null;
         return temp;
     }
 
-    public T peek(){
-        if (isEmpty()){
+    public T peek() {
+        if (isEmpty()) {
             throw new EmptyStackException();
         }
-        return list[size-1];
+        return list[size - 1];
     }
 
 
@@ -58,7 +58,7 @@ public class MyStack<T> {
         return size;
     }
 
-    private void reCapacity(int newCapacity){
+    private void reCapacity(int newCapacity) {
         T[] tempArr = (T[]) new Object[newCapacity];
         System.arraycopy(list, 0, tempArr, 0, size);
         list = tempArr;
