@@ -43,6 +43,14 @@ public class Main {
 
         System.out.println(deque.toString());
 
+        /*
+        Result for Deque. I'm not sure it is correct.
+        After Insert:
+        [ 1, 2, 3, null, null, null, null, 30, 20, 10 ]
+        After Remove:
+        [ 2, 3, null, null, null, null, 30, 20 ]
+         */
+
 //        for (int i = 0; i < 4; i++) {
 //            System.out.println(myStack.pop());
 //        }
