@@ -25,14 +25,15 @@ public class MyPriorityQueue<T extends Comparable<T>> {
     public void insert(T item) {
         if (isFull()) {
             //реализовать расширение массива
-            throw new StackOverflowError("Очередь заполнена");
+            capacity = (int) (capacity + (capacity * 0.25));
+            reCapacity(capacity);
         }
         list[size] = item;
         size++;
 
         int i = size - 1;
-        while (i > 0 && list[i-1].compareTo(list[i]) < 0) {
-            swap(i, i-1);
+        while (i > 0 && list[i - 1].compareTo(list[i]) < 0) {
+            swap(i, i - 1);
             i--;
         }
     }
