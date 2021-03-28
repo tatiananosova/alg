@@ -4,11 +4,12 @@ import java.util.ListIterator;
 
 public class Main {
     public static void main(String[] args) {
-//        MyLinkedList<String> mll = new MyLinkedList<>();
-//        mll.insertFirst("one");
-//        mll.insertFirst("two");
-//        mll.insertFirst("three");
-//
+        MyLinkedList<String> mll = new MyLinkedList<>();
+        mll.insertFirst("one");
+        mll.insertFirst("two");
+        mll.insertFirst("three");
+        mll.insertFirst("four");
+
 ////        System.out.println(mll.removeFirst());
 ////
 ////        System.out.println(mll.removeLast());
@@ -26,14 +27,15 @@ public class Main {
 ////        for (String s : mll) {
 ////            System.out.println(s);
 ////        }
-//
-//        ListIterator<String> li = mll.listiterator();
-//        while(li.hasNext()){
-//            System.out.println(li.next());
-//        }
-////        while(li.hasPrevious()){
-////            System.out.println(li.previous());
-////        }
+
+        ListIterator<String> li = mll.listiterator();
+        while(li.hasNext()){
+            System.out.println(li.next() + ". next index " + li.nextIndex() + ", prev index " + li.previousIndex());
+        }
+        while(li.hasPrevious()){
+            System.out.println(li.previous() +  ". next index " + li.nextIndex() + ", prev index " + li.previousIndex());
+        }
+
 
         MyLinkedStack<String> myLinkedStack = new MyLinkedStack<>();
         myLinkedStack.push("z");

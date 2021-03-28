@@ -20,6 +20,7 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     private class Iter implements Iterator<T> {
+        int index = 0;
         Node current = new Node(null, first);
 
         @Override
@@ -29,13 +30,13 @@ public class MyLinkedList<T> implements Iterable<T> {
 
         @Override
         public T next() {
+            index++;
             current = current.getNext();
             return current.getValue();
         }
     }
 
     private class ListIter extends Iter implements ListIterator<T> {
-        int index = 0;
 
         @Override
         public boolean hasPrevious() {
@@ -44,34 +45,36 @@ public class MyLinkedList<T> implements Iterable<T> {
 
         @Override
         public T previous() {
-            return null;
+            index--;
+            current = current.getPrev();
+            return current.getValue();
         }
 
         @Override
         public int nextIndex() {
-            return 0;
+            return (index >= size()) ? -1 : index + 1;
         }
 
         @Override
         public int previousIndex() {
-            return 0;
+            return (index >= 0) ? index - 1 : -1;
         }
 
         //удаляет элемент который прошли методом next или prev
         @Override
         public void remove() {
-
+            MyLinkedList.this.remove(current.getValue());
         }
-        //удаляет элементу который прошли методом next или prev
+        //устанавливает элементу который прошли методом next или prev
         @Override
         public void set(T t) {
-
+            current.setValue(t);
         }
         //добавить эелемент после элемента который прошли методом next или prev
         // в направлении куда шли.
         @Override
         public void add(T t) {
-
+            insert(index, t);
         }
     }
 
