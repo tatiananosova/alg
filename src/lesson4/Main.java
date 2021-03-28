@@ -43,5 +43,14 @@ public class Main {
 
         myLinkedStack.pop();
         System.out.println(myLinkedStack.toString());
+
+        MyLinkedQueue<Integer> myLinkedQueue = new MyLinkedQueue<>();
+        myLinkedQueue.insert(1);
+        myLinkedQueue.insert(2);
+        myLinkedQueue.insert(3);
+        System.out.println(myLinkedQueue.toString());
+
+        myLinkedQueue.remove();
+        System.out.println(myLinkedQueue.toString());
     }
 }
