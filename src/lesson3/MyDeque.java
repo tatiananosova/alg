@@ -1,4 +1,4 @@
-package lesson4;
+package lesson3;
 
 import java.util.NoSuchElementException;
 

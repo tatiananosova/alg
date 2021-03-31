@@ -36,4 +36,21 @@ public class MySortedArrayList<T extends Comparable<T>> extends MyArrayList<T> {
         }
         return -1;
     }
+
+    private int recBinaryFind(T item, int lo, int hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (item.compareTo(get(mid)) == 0) {
+            return mid;
+        } else if (lo == hi) {
+            return -1;
+        } else if (item.compareTo(get(mid)) < 0) {
+            return recBinaryFind(item, lo, mid);
+        } else {
+            return recBinaryFind(item, mid + 1, hi);
+        }
+    }
+
+    public int recFind(T item){
+        return recBinaryFind(item, 0, size()-1);
+    }
 }

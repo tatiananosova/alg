@@ -4,15 +4,15 @@ public class MyLinkedStack<T> {
     private MyLinkedList<T> ll = new MyLinkedList<>();
 
     public void push(T item){
-
+        ll.insertFirst(item);
     }
 
     public T peek(){
-        return null;
+        return ll.getFirst();
     }
 
     public T pop(){
-        return null;
+        return ll.removeFirst();
     }
 
     public int size(){
@@ -21,5 +21,10 @@ public class MyLinkedStack<T> {
 
     public boolean isEmpty(){
         return ll.isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return ll.toString();
     }
 }

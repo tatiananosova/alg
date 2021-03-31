@@ -20,6 +20,7 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     private class Iter implements Iterator<T> {
+        int index = 0;
         Node current = new Node(null, first);
 
         @Override
@@ -29,49 +30,114 @@ public class MyLinkedList<T> implements Iterable<T> {
 
         @Override
         public T next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
             current = current.getNext();
             return current.getValue();
         }
     }
 
-    private class ListIter extends Iter implements ListIterator<T> {
-        int index = 0;
+    private enum ListIterCommand {
+        next, prev, none;
+    }
+
+    private class ListIter implements ListIterator<T> {
+        //next это следующий, current это тот который стоит перед next
+        Node begin = new Node(last, null, first);
+        Node current = begin;
+        int nextIndex = 0;
+        ListIterCommand lastCommand = ListIterCommand.none;
+
+        @Override
+        public boolean hasNext() {
+            return nextIndex < size;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            current = current.getNext();
+            nextIndex++;
+            lastCommand = ListIterCommand.next;
+            return current.getValue();
+        }
 
         @Override
         public boolean hasPrevious() {
-            return current.getPrev() != null;
+            return nextIndex > 0;
         }
 
         @Override
         public T previous() {
-            return null;
+            if (!hasPrevious())
+                throw new NoSuchElementException();
+            T temp = current.getValue();
+            current = current.getPrev();
+            if (current == null) {
+                current = begin;
+            }
+            nextIndex--;
+            lastCommand = ListIterCommand.prev;
+            return temp;
         }
 
         @Override
         public int nextIndex() {
-            return 0;
+            return nextIndex;
         }
 
         @Override
         public int previousIndex() {
-            return 0;
+            return nextIndex - 1;
         }
 
         //удаляет элемент который прошли методом next или prev
         @Override
         public void remove() {
+            if (lastCommand == ListIterCommand.none) {
+                throw new IllegalStateException();
+            }
 
+            if (lastCommand == ListIterCommand.next) {
+                //удалить надо узел current,
+                // и сдивнутся на current присвоить следующий если есть, а если нет то last
+                Node temp = current.getNext();
+                if (current == first) {
+                    removeFirst();
+                } else if (current == last) {
+                    removeLast();
+                } else {
+                    current.getNext().setPrev(current.getPrev());
+                    current.getPrev().setNext(current.getNext());
+                }
+
+                lastCommand = ListIterCommand.none;
+                if (temp != null) {
+                    current = temp;
+                } else {
+                    current = last;
+                }
+            }
+
+            if (lastCommand == ListIterCommand.prev) {
+                //удалить надо узел current.next
+
+                lastCommand = ListIterCommand.none;
+            }
         }
+
         //удаляет элементу который прошли методом next или prev
         @Override
         public void set(T t) {
-
+            current.setValue(t);
         }
+
         //добавить эелемент после элемента который прошли методом next или prev
         // в направлении куда шли.
         @Override
         public void add(T t) {
-
         }
     }
 

@@ -1,5 +1,6 @@
 package lesson3;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class MyQueue<T> {
@@ -9,6 +10,12 @@ public class MyQueue<T> {
     private final int DEFAULT_CAPACITY = 10;
     private int begin;
     private int end;
+
+    //0 1 2 3 4
+    //b
+    //  e
+    //8
+
 
     public MyQueue(int capacity) throws IllegalArgumentException {
         if (capacity <= 0) {
@@ -48,6 +55,7 @@ public class MyQueue<T> {
         size--;
         list[begin] = null;
         begin = nextIndex(begin);
+
         return temp;
     }
 
@@ -88,5 +96,23 @@ public class MyQueue<T> {
         }
         sb.append(" ]");
         return sb.toString();
+    }
+
+    private void reCapacity(int newCapacity) {
+        T[] tempArr = (T[]) new Object[newCapacity];
+        // b...e
+        if (begin < end) {
+            System.arraycopy(list, begin, tempArr, 0, size);
+            begin = 0;
+            end = size;
+        } else {
+            System.arraycopy(list, begin, tempArr, 0, list.length - begin);
+            System.arraycopy(list, 0, tempArr, list.length - begin, end);
+            begin = 0;
+            end = size;
+        }
+        //...e  b...
+//        System.arraycopy(list, 0, tempArr, 0, size);
+        list = tempArr;
     }
 }

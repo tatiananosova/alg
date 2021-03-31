@@ -1,9 +1,14 @@
 package lesson2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.function.*;
 
 public class Main {
+    static Random r = new Random();
+
     public static void main(String[] args) {
 //        int[] arr = new int[10];
 //
@@ -56,7 +61,6 @@ public class Main {
 //        System.out.println(list);
 
 
-
 //        MyArrayList<Integer> mal = new MyArrayList<>();
 //        mal.add(5);
 //        mal.add(8);
@@ -106,7 +110,7 @@ public class Main {
 // Sort time 37507 mls
         System.out.println(System.currentTimeMillis() - time);
 
-        //      System.out.println(mal);
+//        System.out.println(mal);
 
     }
 

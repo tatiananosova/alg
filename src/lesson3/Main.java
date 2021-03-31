@@ -1,6 +1,8 @@
 package lesson3;
 
 
+import java.util.LinkedList;
+
 public class Main {
     public static void main(String[] args) {
         MyStack<String> myStack = new MyStack<>();
@@ -29,17 +31,17 @@ public class Main {
         System.out.println(myQueue.toString());
 
         Deque<Integer> deque = new Deque<>();
-        deque.insertLeft(1);
-        deque.insertLeft(2);
-        deque.insertLeft(3);
-        deque.insertRight(10);
-        deque.insertRight(20);
-        deque.insertRight(30);
+        deque.insertFirst(1);
+        deque.insertFirst(2);
+        deque.insertFirst(3);
+        deque.insertLast(10);
+        deque.insertLast(20);
+        deque.insertLast(30);
 
         System.out.println(deque.toString());
 
-        deque.removeLeft();
-        deque.removeRight();
+        deque.removeFirst();
+        deque.removeLast();
 
         System.out.println(deque.toString());
 
@@ -106,5 +108,4 @@ public class Main {
         }
         return result.toString();
     }
-
 }
