@@ -11,9 +11,12 @@ public class Main {
 //        System.out.println(triangleNum(5));
 //        System.out.println(recTriangleNum(5));
 
-        System.out.println(multiply(3,8));
-        System.out.println(recMultiply(3,8));
+//        System.out.println(multiply(3,8));
+//        System.out.println(recMultiply(3,8));
 
+        System.out.println(exponentiation(2,4));
+        System.out.println(recExponentiation(2,4));
+        System.out.println(knapsack(values.length - 1, W));
     }
 
     public static int fact(int n) {
@@ -79,5 +82,35 @@ public class Main {
         }
         return recMultiply(a, b - 1) + a;
     }
+    public static int exponentiation(int a, int b) {
+        int value = 1;
+        for (int i = 0; i < b; i++) {
+            value *= a;
+        }
+        return value;
+    }
+
+    public static int recExponentiation(int a, int b) {
+        if (b == 1) {
+            return a;
+        }
+        return recExponentiation(a, b - 1) * a;
+    }
+
+    static int[] values = new int[] {94, 260, 92, 281, 27};
+    static int[] weights = new int[] {4,3,2,1,1};
+    static int W = 5;
+
+    private static int knapsack(int i, int W) {
+        if (i < 0) {
+            return 0;
+        }
+        if (weights[i] > W) {
+            return knapsack(i-1, W);
+        } else {
+            return Math.max(knapsack(i-1, W), knapsack(i-1, W - weights[i]) + values[i]);
+        }
+    }
+
 
 }
