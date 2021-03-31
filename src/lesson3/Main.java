@@ -1,6 +1,8 @@
 package lesson3;
 
 
+import java.util.LinkedList;
+
 public class Main {
     public static void main(String[] args) {
         MyStack<String> myStack = new MyStack<>();
@@ -106,5 +108,4 @@ public class Main {
         }
         return result.toString();
     }
-
 }

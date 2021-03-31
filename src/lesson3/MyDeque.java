@@ -1,9 +1,8 @@
 package lesson3;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class MyQueue<T> {
+public class MyDeque<T> {
     private T[] list;
     private int size;
     private int capacity;
@@ -13,11 +12,11 @@ public class MyQueue<T> {
 
     //0 1 2 3 4
     //b
-    //  e
-    //8
+    //    e
+    //1 5
 
 
-    public MyQueue(int capacity) throws IllegalArgumentException {
+    public MyDeque(int capacity) throws IllegalArgumentException {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity: " + capacity);
         }
@@ -25,7 +24,7 @@ public class MyQueue<T> {
         list = (T[]) new Object[capacity];
     }
 
-    public MyQueue() {
+    public MyDeque() {
         this.capacity = DEFAULT_CAPACITY;
         list = (T[]) new Object[capacity];
     }
@@ -36,26 +35,59 @@ public class MyQueue<T> {
      * @param item добавляемый элемент
      * @throws IllegalStateException если очередь полная
      */
-    public void insert(T item) throws IllegalStateException {
-        if (isFull()) increaseCapacity();
+    public void insertLast(T item) throws IllegalStateException {
+        if (isFull()) {
+            //реализовать расширение массива
+            throw new IllegalStateException("Очередь заполнена");
+        }
         size++;
         list[end] = item;
         end = nextIndex(end);
     }
 
-    public T peekFront() {
+    /**
+     * Метод добавления в очередь нового элемента в начало списка
+     *
+     * @param item добавляемый элемент
+     * @throws IllegalStateException если очередь полная
+     */
+    public void insertFirst(T item) throws IllegalStateException {
+        if (isFull()) {
+            //реализовать расширение массива
+            throw new IllegalStateException("Очередь заполнена");
+        }
+        begin = prevIndex(begin);
+        list[begin] = item;
+        size++;
+    }
+
+    public T peekFirst() {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
         return list[begin];
     }
 
-    public T remove() {
-        T temp = peekFront();
+    public T removeFirst() {
+        T temp = peekFirst();
         size--;
         list[begin] = null;
         begin = nextIndex(begin);
+        return temp;
+    }
 
+    public T peekLast() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return list[prevIndex(end)];
+    }
+
+    public T removeLast() {
+        T temp = peekLast();
+        size--;
+        end = prevIndex(end);
+        list[end] = null;
         return temp;
     }
 
@@ -75,12 +107,8 @@ public class MyQueue<T> {
     private int nextIndex(int index) {
         return (index + 1) % list.length;
     }
-
-    private void increaseCapacity() {
-        capacity = (int) (capacity + (capacity * 0.25));
-        T[] newList = (T[]) new Comparable[capacity];
-        System.arraycopy(list, 0, newList, 0, size);
-        list = newList;
+    private int prevIndex(int index) {
+        return (list.length + index - 1) % list.length;
     }
 
     @Override
@@ -96,23 +124,5 @@ public class MyQueue<T> {
         }
         sb.append(" ]");
         return sb.toString();
-    }
-
-    private void reCapacity(int newCapacity) {
-        T[] tempArr = (T[]) new Object[newCapacity];
-        // b...e
-        if (begin < end) {
-            System.arraycopy(list, begin, tempArr, 0, size);
-            begin = 0;
-            end = size;
-        } else {
-            System.arraycopy(list, begin, tempArr, 0, list.length - begin);
-            System.arraycopy(list, 0, tempArr, list.length - begin, end);
-            begin = 0;
-            end = size;
-        }
-        //...e  b...
-//        System.arraycopy(list, 0, tempArr, 0, size);
-        list = tempArr;
     }
 }

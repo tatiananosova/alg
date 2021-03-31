@@ -174,12 +174,11 @@ public class MyArrayList<T extends Comparable<T>> {
                     isSwap = true;
                 }
             }
-            if( !isSwap){
+            if (!isSwap) {
                 break;
             }
         }
     }
-
     public void shuffle() {
         Random rnd = new Random();
         for (int i = size - 1; i > 0; i--) {
@@ -188,5 +187,40 @@ public class MyArrayList<T extends Comparable<T>> {
             list[index] = list[i];
             list[i] = a;
         }
+    }
+
+    private void quickSort(int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        T opora = list[mid];
+
+        int i = lo;
+        int j = hi;
+        while (i <= j) {
+            while (less(list[i], opora)) {
+                i++;
+            }
+            while (less(opora, list[j])) {
+                j--;
+            }
+            if (i <= j) {
+                swap(i, j);
+                i++;
+                j--;
+            }
+        }
+
+        if (lo < j) {
+            quickSort(lo, j);
+        }
+        if (hi > i) {
+            quickSort(i, hi);
+        }
+    }
+
+    public void qSort() {
+        quickSort(0, size - 1);
     }
 }
