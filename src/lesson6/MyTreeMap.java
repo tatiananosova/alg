@@ -31,6 +31,36 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
         return node.size;
     }
 
+    public int heightOfBinaryTree() {
+        return heightOfBinaryTree(root);
+    }
+
+    private int heightOfBinaryTree(Node node)
+    {
+        if (node == null)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1 +
+                    Math.max(heightOfBinaryTree(node.left),
+                            heightOfBinaryTree(node.right));
+        }
+    }
+
+    public boolean isHeightBalanced() {
+        return isHeightBalanced(root);
+    }
+
+    private boolean isHeightBalanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return isHeightBalanced(node.left) && isHeightBalanced(node.right)
+                && (heightOfBinaryTree(node.left) - heightOfBinaryTree(node.right)) <= 1;
+    }
+
     public boolean isEmpty() {
         return root == null;
     }
@@ -123,7 +153,7 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
             return node.right;
         }
         node.left = deleteMin(node.left);
-        node.size = size(node.left) + size(node.right) + 1;
+        node.size = size(node.left) + size(node.right) - 1;
         return node;
     }
 
@@ -153,7 +183,7 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
             node.right = deleteMin(temp.right);
             node.left = temp.left;
         }
-        node.size = size(node.left) + size(node.right) + 1;
+        node.size = size(node.left) + size(node.right) - 1;
         return node;
     }
 
