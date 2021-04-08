@@ -41,8 +41,7 @@ public class LinearProbingHashMap<Key, Value> {
     }
 
     public void put(Key key, Value value){
-        // проверка на прввышение лоад фактора. Либо просаем эксепшн либо
-        // перехиширование на массив размером больше, но простое число
+        checkLoadFactor();
         checkKeyNotNull(key);
         int i = hash(key);
         int step = 1;
@@ -56,6 +55,19 @@ public class LinearProbingHashMap<Key, Value> {
         keys[i] = key;
         values[i] = value;
         size++;
+    }
+
+    private void checkLoadFactor() {
+        if ((double) size / capacity > 0.7) {
+            System.out.println("Load factor reached. Increasing capacity");
+            capacity = (int) (capacity + (capacity * 0.5));
+            Key[] newKey = (Key[]) new Object[capacity];
+            Value[] newValues = (Value[]) new Object[capacity];
+            System.arraycopy(keys, 0, newKey, 0, size);
+            System.arraycopy(values, 0, newValues, 0, size);
+            this.keys = newKey;
+            this.values = newValues;
+        }
     }
 
     public Value get(Key key){
